@@ -10,6 +10,7 @@ public class Musica {
 	private double duracao;
 	private int ano;
 	private String genero;
+	private String ficheiro;
 
 	public String getTitulo() {
 		return titulo;
@@ -51,16 +52,25 @@ public class Musica {
 		this.genero = genero;
 	}
 
-	@Override
-	public String toString() {
-		return "Titulo: " + titulo + "\nAutor: " + autor + "\nDuração: " + duracao + "\nAno: " + ano + "\nGenero: " + genero;
+	public String getFicheiro() {
+		return ficheiro;
 	}
 
-	public Musica(String titulo, String autor, double duracao, int ano, String genero) {
+	public void setFicheiro(String ficheiro) {
+		this.ficheiro = ficheiro;
+	}
+
+	@Override
+	public String toString() {
+		return "Titulo: " + titulo + "\nAutor: " + autor + "\nDuração: " + duracao + "\nAno: " + ano + "\nGenero: " + genero + "\nFicheiro: " + ficheiro;
+	}
+
+	public Musica(String titulo, String autor, double duracao, int ano, String genero, String ficheiro) {
 		this.titulo = titulo;
 		this.autor = autor;
 		this.duracao = duracao;
 		this.ano = ano;
 		this.genero = genero;
+		this.ficheiro = ficheiro;
 	}
 }

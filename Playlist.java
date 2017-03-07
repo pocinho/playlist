@@ -1,3 +1,7 @@
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
+
 /**
  * @author Paulo Pocinho
  * @since 21-02-2017
@@ -19,6 +23,16 @@ public class Playlist {
 				listaMusica[totalMusicas - 1] = null;
 				break;
 			}
+		}
+	}
+
+	public void tocarMusica(int posicao) throws IOException {
+		int pos = posicao - 1;
+		if ((pos < 0) || (pos >= totalMusicas)) {
+			throw new IllegalArgumentException("Não é possivel encontrar a musica " + posicao + " na playlist " + nome + ".");
+		} else {
+			String ficheiro = listaMusica[pos].getFicheiro();
+			Desktop.getDesktop().open(new File(ficheiro));
 		}
 	}
 
@@ -72,16 +86,17 @@ public class Playlist {
 		}
 	}
 
-	public void consultarMusica(int posicao) {
+	public String consultarMusica(int posicao) {
 		int pos = posicao - 1;
+		String consulta = "";
 		if ((pos < 0) || (pos >= totalMusicas)) {
 			throw new IllegalArgumentException("Não é possivel encontrar a musica " + posicao + " na playlist " + nome + ".");
 		} else {
-			System.out.println("Playlist " + nome + ":\n");
-			System.out.println(posicao + ". " + listaMusica[pos].getTitulo() + "\n");
-			System.out.println(listaMusica[pos]);
-			System.out.println();
+			consulta = "Playlist " + nome + ":\n\n";
+			consulta += posicao + ". " + listaMusica[pos].getTitulo() + "\n\n";
+			consulta += listaMusica[pos] + "\n";
 		}
+		return consulta;
 	}
 
 	public void alterarMusica(int posicao, Musica musica) {
@@ -112,10 +127,10 @@ public class Playlist {
 		String resultado = "Playlist " + nome + ":\n\n";
 
 		for (int i = 0; i < totalMusicas; ++i) {
-			resultado = resultado + (i+1) + ". " + listaMusica[i].getTitulo() + "\n";
+			resultado += (i + 1) + ". " + listaMusica[i].getTitulo() + "\n";
 		}
 
-		resultado = resultado + "\nTotal Musicas: " + totalMusicas + "\nCapacidade: " + capacidade + "\n";
+		resultado += "\nTotal Musicas: " + totalMusicas + "\nCapacidade: " + capacidade + "\n";
 
 		return resultado;
 	}

@@ -1,3 +1,4 @@
+
 /**
  * @author Paulo Pocinho
  * @since 21-02-2017
@@ -23,7 +24,7 @@ public class Main {
 			s.nextLine();
 		} while (playlistsPossiveis <= 0);
 
-		Registo p = new Registo(playlistsPossiveis);
+		Registo player = new Registo(playlistsPossiveis);
 
 		do {
 			escreveMenu();
@@ -32,37 +33,40 @@ public class Main {
 
 			switch (opcao) {
 			case 1:
-				criarPlaylist(s, p);
+				criarPlaylist(s, player);
 				break;
 			case 2:
-				criarMusica(s, p);
+				criarMusica(s, player);
 				break;
 			case 3:
-				removerPlaylist(s, p);
+				removerPlaylist(s, player);
 				break;
 			case 4:
-				removerMusica(s, p);
+				removerMusica(s, player);
 				break;
 			case 5:
-				listarPlaylists(p);
+				listarPlaylists(player);
 				break;
 			case 6:
-				consultarPlaylist(s, p);
+				consultarPlaylist(s, player);
 				break;
 			case 7:
-				consultarMusica(s, p);
+				consultarMusica(s, player);
 				break;
 			case 8:
-				alterarPlaylist(s, p);
+				alterarPlaylist(s, player);
 				break;
 			case 9:
-				alterarMusica(s, p);
+				alterarMusica(s, player);
 				break;
 			case 10:
-				reordenarPlaylist(s, p);
+				reordenarPlaylist(s, player);
 				break;
 			case 11:
-				alocarMusica(s, p);
+				alocarMusica(s, player);
+				break;
+			case 12:
+				tocarMusica(s, player);
 				break;
 			case 0:
 				System.out.println("Adeus, volte sempre!");
@@ -75,6 +79,20 @@ public class Main {
 		} while (opcao != 0);
 
 		s.close();
+	}
+
+	private static void tocarMusica(Scanner s, Registo p) {
+		System.out.println("Introduza o numero da playlist:");
+		int playlist = s.nextInt();
+		s.nextLine();
+		System.out.println("Introduza o numero da musica:");
+		int musica = s.nextInt();
+		s.nextLine();
+		try {
+			p.tocarMusica(playlist, musica);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 
 	}
 
@@ -99,8 +117,10 @@ public class Main {
 		s.nextLine();
 		System.out.println("Introduza o genero da musica " + titulo + ":");
 		String genero = s.nextLine();
+		System.out.println("Introduza o caminho para o ficheiro da musica " + titulo + ":");
+		String ficheiro = s.nextLine();
 		try {
-			p.criarMusica(playlist, new Musica(titulo, autor, duracao, ano, genero));
+			p.criarMusica(playlist, new Musica(titulo, autor, duracao, ano, genero, ficheiro));
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -140,8 +160,10 @@ public class Main {
 		s.nextLine();
 		System.out.println("Introduza o estilo da musica " + titulo + ":");
 		String genero = s.nextLine();
+		System.out.println("Introduza o caminho para o ficheiro da musica " + titulo + ":");
+		String ficheiro = s.nextLine();
 		try {
-			p.alterarMusica(playlist, musica, new Musica(titulo, autor, duracao, ano, genero));
+			p.alterarMusica(playlist, musica, new Musica(titulo, autor, duracao, ano, genero, ficheiro));
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -170,7 +192,7 @@ public class Main {
 		int musica = s.nextInt();
 		s.nextLine();
 		try {
-			p.consultarMusica(playlist, musica);
+			System.out.println(p.consultarMusica(playlist, musica));
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -182,7 +204,7 @@ public class Main {
 		int playlist = s.nextInt();
 		s.nextLine();
 		try {
-			p.consultarPlaylist(playlist);
+			System.out.println(p.consultarPlaylist(playlist));
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -274,8 +296,23 @@ public class Main {
 		System.out.println(" (9) Alterar uma musica");
 		System.out.println("(10) Reordenar playlist");
 		System.out.println("(11) Alocar musica a outra playlist");
+		System.out.println("(12) Tocar musica");
 		System.out.println(" (0) Sair");
-		System.out.println("Introduza uma opção: ");
+		System.out.println("Introduza uma opção:");
 	}
 
+	public static void gerarDadosTeste(Registo p) {
+		int playlistsDisponiveis = p.getCapacidade() - p.getTotalPlaylists();
+		if (playlistsDisponiveis >= 2) {
+			for (int i = 1; i <= 2; ++i) {
+				p.criarPlaylist("exemplo " + i, 7);
+				for (int m = 1; m < 8; ++m) {
+					p.criarMusica(i, new Musica("titulo " + m, "autor " + m, 3.44, 2017, "genero " + m, "ficheiro " + m));
+				}
+			}
+		} else {
+			System.out.println("A geração de dados requeur espaço para duas playlists.");
+		}
+		pausa();
+	}
 }
