@@ -24,7 +24,7 @@ public class Main {
 			s.nextLine();
 		} while (playlistsPossiveis <= 0);
 
-		Registo player = new Registo(playlistsPossiveis);
+		Player player = new Player(playlistsPossiveis);
 
 		do {
 			escreveMenu();
@@ -81,7 +81,7 @@ public class Main {
 		s.close();
 	}
 
-	private static void tocarMusica(Scanner s, Registo p) {
+	private static void tocarMusica(Scanner s, Player p) {
 		System.out.println("Introduza o numero da playlist:");
 		int playlist = s.nextInt();
 		s.nextLine();
@@ -96,12 +96,12 @@ public class Main {
 
 	}
 
-	public static void listarPlaylists(Registo p) {
+	public static void listarPlaylists(Player p) {
 		System.out.println(p);
 		pausa();
 	}
 
-	public static void criarMusica(Scanner s, Registo p) {
+	public static void criarMusica(Scanner s, Player p) {
 		System.out.println("Introduza o numero da playlist:");
 		int playlist = s.nextInt();
 		s.nextLine();
@@ -127,7 +127,7 @@ public class Main {
 		pausa();
 	}
 
-	public static void criarPlaylist(Scanner s, Registo p) {
+	public static void criarPlaylist(Scanner s, Player p) {
 		System.out.println("Introduza o nome da playlist:");
 		String nome = s.nextLine();
 		System.out.println("Introduza a capacidade da playlist " + nome + ":");
@@ -141,7 +141,7 @@ public class Main {
 		pausa();
 	}
 
-	public static void alterarMusica(Scanner s, Registo p) {
+	public static void alterarMusica(Scanner s, Player p) {
 		System.out.println("Introduza o numero da playlist:");
 		int playlist = s.nextInt();
 		s.nextLine();
@@ -170,7 +170,7 @@ public class Main {
 		pausa();
 	}
 
-	public static void alterarPlaylist(Scanner s, Registo p) {
+	public static void alterarPlaylist(Scanner s, Player p) {
 		System.out.println("Introduza o numero da playlist:");
 		int playlist = s.nextInt();
 		s.nextLine();
@@ -184,7 +184,7 @@ public class Main {
 		pausa();
 	}
 
-	public static void consultarMusica(Scanner s, Registo p) {
+	public static void consultarMusica(Scanner s, Player p) {
 		System.out.println("Introduza o numero da playlist:");
 		int playlist = s.nextInt();
 		s.nextLine();
@@ -199,7 +199,7 @@ public class Main {
 		pausa();
 	}
 
-	public static void consultarPlaylist(Scanner s, Registo p) {
+	public static void consultarPlaylist(Scanner s, Player p) {
 		System.out.println("Introduza o numero da playlist:");
 		int playlist = s.nextInt();
 		s.nextLine();
@@ -211,7 +211,7 @@ public class Main {
 		pausa();
 	}
 
-	public static void alocarMusica(Scanner s, Registo p) {
+	public static void alocarMusica(Scanner s, Player p) {
 		System.out.println("Introduza o numero da playlist origem:");
 		int origem = s.nextInt();
 		s.nextLine();
@@ -229,7 +229,7 @@ public class Main {
 		pausa();
 	}
 
-	public static void removerMusica(Scanner s, Registo p) {
+	public static void removerMusica(Scanner s, Player p) {
 		System.out.println("Introduza o numero da playlist:");
 		int playlist = s.nextInt();
 		s.nextLine();
@@ -244,7 +244,7 @@ public class Main {
 		pausa();
 	}
 
-	public static void removerPlaylist(Scanner s, Registo p) {
+	public static void removerPlaylist(Scanner s, Player p) {
 		System.out.println("Introduza o numero da playlist:");
 		int playlist = s.nextInt();
 		s.nextLine();
@@ -256,7 +256,7 @@ public class Main {
 		pausa();
 	}
 
-	public static void reordenarPlaylist(Scanner s, Registo p) {
+	public static void reordenarPlaylist(Scanner s, Player p) {
 		System.out.println("Introduza o numero da playlist:");
 		int playlist = s.nextInt();
 		s.nextLine();
@@ -299,20 +299,5 @@ public class Main {
 		System.out.println("(12) Tocar musica");
 		System.out.println(" (0) Sair");
 		System.out.println("Introduza uma opção:");
-	}
-
-	public static void gerarDadosTeste(Registo p) {
-		int playlistsDisponiveis = p.getCapacidade() - p.getTotalPlaylists();
-		if (playlistsDisponiveis >= 2) {
-			for (int i = 1; i <= 2; ++i) {
-				p.criarPlaylist("exemplo " + i, 7);
-				for (int m = 1; m < 8; ++m) {
-					p.criarMusica(i, new Musica("titulo " + m, "autor " + m, 3.44, 2017, "genero " + m, "ficheiro " + m));
-				}
-			}
-		} else {
-			System.out.println("A geração de dados requeur espaço para duas playlists.");
-		}
-		pausa();
 	}
 }
