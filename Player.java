@@ -1,4 +1,6 @@
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * @author Paulo Pocinho
@@ -39,7 +41,7 @@ public class Player {
 		return totalPlaylists >= capacidade;
 	}
 
-	public void criarPlaylist(String nome, int capacidade) {
+	public void criarPlaylist(String nome, int capacidade) throws IllegalArgumentException {
 		if (isFull()) {
 			throw new IllegalArgumentException("Não é possível criar mais playlists.");
 		} else {
@@ -48,7 +50,7 @@ public class Player {
 		}
 	}
 
-	public void criarMusica(int playlist, Musica musica) {
+	public void criarMusica(int playlist, Musica musica) throws IllegalArgumentException {
 		int pos = playlist - 1;
 		if ((pos < 0) || (pos >= totalPlaylists)) {
 			throw new IllegalArgumentException("Não é possível encontrar a playlist " + playlist + ".");
@@ -57,7 +59,7 @@ public class Player {
 		}
 	}
 
-	public String consultarMusica(int playlist, int posicao) {
+	public String consultarMusica(int playlist, int posicao) throws IllegalArgumentException {
 		int pos = playlist - 1;
 		String consulta = "";
 		if ((pos < 0) || (pos >= totalPlaylists)) {
@@ -68,7 +70,7 @@ public class Player {
 		return consulta;
 	}
 
-	public void removerMusica(int playlist, int posicao) {
+	public void removerMusica(int playlist, int posicao) throws IllegalArgumentException {
 		int pos = playlist - 1;
 		if ((pos < 0) || (pos >= totalPlaylists)) {
 			throw new IllegalArgumentException("Não é possível encontrar a playlist " + playlist + ".");
@@ -77,7 +79,7 @@ public class Player {
 		}
 	}
 
-	public void alterarMusica(int playlist, int posicao, Musica musica) {
+	public void alterarMusica(int playlist, int posicao, Musica musica) throws IllegalArgumentException {
 		int pos = playlist - 1;
 		if ((pos < 0) || (pos >= totalPlaylists)) {
 			throw new IllegalArgumentException("Não é possível encontrar a playlist " + playlist + ".");
@@ -86,7 +88,7 @@ public class Player {
 		}
 	}
 
-	public void alterarPlaylist(int playlist, String nome) {
+	public void alterarPlaylist(int playlist, String nome) throws IllegalArgumentException {
 		int pos = playlist - 1;
 		if ((pos < 0) || (pos >= totalPlaylists)) {
 			throw new IllegalArgumentException("Não é possível encontrar a playlist " + playlist + ".");
@@ -95,7 +97,7 @@ public class Player {
 		}
 	}
 
-	public String consultarPlaylist(int playlist) {
+	public String consultarPlaylist(int playlist) throws IllegalArgumentException {
 		int pos = playlist - 1;
 		String consulta = "";
 		if ((pos < 0) || (pos >= totalPlaylists)) {
@@ -106,7 +108,7 @@ public class Player {
 		return consulta;
 	}
 
-	public void alocarMusica(int origem, int musica, int destino) {
+	public void alocarMusica(int origem, int musica, int destino) throws IllegalArgumentException {
 		int posOrigem = origem - 1;
 		int posDestino = destino - 1;
 		if ((posOrigem < 0) || (posOrigem >= totalPlaylists)) {
@@ -123,7 +125,7 @@ public class Player {
 		}
 	}
 
-	public void reordenarPlaylist(int playlist, int origem, int destino) {
+	public void reordenarPlaylist(int playlist, int origem, int destino) throws IllegalArgumentException {
 		int pos = playlist - 1;
 		if ((pos < 0) || (pos >= totalPlaylists)) {
 			throw new IllegalArgumentException("Não é possível encontrar a playlist " + playlist + ".");
@@ -132,7 +134,7 @@ public class Player {
 		}
 	}
 
-	public void removerPlaylist(int playlist) {
+	public void removerPlaylist(int playlist) throws IllegalArgumentException {
 		int pos = playlist - 1;
 		if ((pos < 0) || (pos >= totalPlaylists)) {
 			throw new IllegalArgumentException("Não é possível encontrar a playlist " + playlist + ".");
@@ -143,13 +145,43 @@ public class Player {
 		}
 	}
 
-	public void tocarMusica(int playlist, int musica) throws IOException {
+	public void tocarMusica(int playlist, int musica) throws IOException, IllegalArgumentException {
 		int pos = playlist - 1;
 		if ((pos < 0) || (pos >= totalPlaylists)) {
 			throw new IllegalArgumentException("Não é possível encontrar a playlist " + playlist + ".");
 		} else {
 			playlists[pos].tocarMusica(musica);
 		}
+	}
+
+	public String gravarDados() throws FileNotFoundException {
+		String resultado = "";
+
+		PrintWriter f = null;
+		try {
+			f = new PrintWriter("playlist.txt");
+			for (int i = 0; i < totalPlaylists; ++i) {
+				Musica lista[] = playlists[i].getLista();
+				int capacidadeMusicas = lista.length;
+				for (int m = 0; m < capacidadeMusicas; ++m) {
+					f.println((i + 1) + "," + capacidadeMusicas + "," + playlists[i].getNome() + "," + lista[m].getTitulo() + "," + lista[m].getAutor() + "," + lista[m].getDuracao() + "," + lista[m].getAno() + "," + lista[m].getGenero()
+							+ "," + lista[m].getFicheiro());
+				}
+			}
+			resultado = "Dados gravados com sucesso.";
+		} finally {
+			if (f != null) {
+				f.close();
+			}
+		}
+		return resultado;
+	}
+
+	public void reset() {
+		for (int i = 0; i < totalPlaylists; ++i) {
+			playlists[i] = null;
+		}
+		totalPlaylists = 0;
 	}
 
 	@Override

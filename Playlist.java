@@ -26,7 +26,7 @@ public class Playlist {
 		}
 	}
 
-	public void tocarMusica(int posicao) throws IOException {
+	public void tocarMusica(int posicao) throws IOException, IllegalArgumentException {
 		int pos = posicao - 1;
 		if ((pos < 0) || (pos >= totalMusicas)) {
 			throw new IllegalArgumentException("Não é possivel encontrar a musica " + posicao + " na playlist " + nome + ".");
@@ -45,6 +45,14 @@ public class Playlist {
 		return resultado;
 	}
 
+	public Musica[] getLista() {
+		return this.listaMusica;
+	}
+
+	public int getTotalMusicas() {
+		return this.totalMusicas;
+	}
+
 	public String getNome() {
 		return nome;
 	}
@@ -53,7 +61,7 @@ public class Playlist {
 		this.nome = nome;
 	}
 
-	public Musica getMusica(int posicao) {
+	public Musica getMusica(int posicao) throws IllegalArgumentException {
 		int pos = posicao - 1;
 		if ((pos < 0) || (pos >= totalMusicas)) {
 			throw new IllegalArgumentException("Não é possivel encontrar a musica " + posicao + " na playlist " + nome + ".");
@@ -66,7 +74,7 @@ public class Playlist {
 		return totalMusicas >= capacidade;
 	}
 
-	public void adicionarMusica(Musica musica) {
+	public void adicionarMusica(Musica musica) throws IllegalArgumentException {
 		if (isFull()) {
 			throw new IllegalArgumentException("A playlist " + nome + " está cheia.");
 		} else {
@@ -75,7 +83,7 @@ public class Playlist {
 		}
 	}
 
-	public void removerMusica(int posicao) {
+	public void removerMusica(int posicao) throws IllegalArgumentException {
 		int pos = posicao - 1;
 		if ((pos < 0) || (pos >= totalMusicas)) {
 			throw new IllegalArgumentException("Não é possivel encontrar a musica " + posicao + " na playlist " + nome + ".");
@@ -86,7 +94,7 @@ public class Playlist {
 		}
 	}
 
-	public String consultarMusica(int posicao) {
+	public String consultarMusica(int posicao) throws IllegalArgumentException {
 		int pos = posicao - 1;
 		String consulta = "";
 		if ((pos < 0) || (pos >= totalMusicas)) {
@@ -99,7 +107,7 @@ public class Playlist {
 		return consulta;
 	}
 
-	public void alterarMusica(int posicao, Musica musica) {
+	public void alterarMusica(int posicao, Musica musica) throws IllegalArgumentException {
 		int pos = posicao - 1;
 		if ((pos < 0) || (pos >= totalMusicas)) {
 			throw new IllegalArgumentException("Não é possivel encontrar a musica " + posicao + " na playlist " + nome + ".");
@@ -108,7 +116,7 @@ public class Playlist {
 		}
 	}
 
-	public void reordenarMusica(int origem, int destino) {
+	public void reordenarMusica(int origem, int destino) throws IllegalArgumentException {
 		int posOrigem = origem - 1;
 		int posDestino = destino - 1;
 		if ((posOrigem < 0) || (posOrigem >= totalMusicas)) {

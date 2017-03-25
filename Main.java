@@ -4,6 +4,8 @@
  * @since 21-02-2017
  */
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.Scanner;
@@ -14,15 +16,9 @@ public class Main {
 
 		int opcao = 0;
 		Scanner s = new Scanner(System.in);
-		s.useLocale(Locale.US); // para detectar double
+		s.useLocale(Locale.US); // para detectar double com ponto
 
-		int playlistsPossiveis;
-
-		do {
-			System.out.println("Introduza o numero de playlists que deseja criar:");
-			playlistsPossiveis = s.nextInt();
-			s.nextLine();
-		} while (playlistsPossiveis <= 0);
+		final int playlistsPossiveis = 100;
 
 		Player player = new Player(playlistsPossiveis);
 
@@ -67,6 +63,12 @@ public class Main {
 				break;
 			case 12:
 				tocarMusica(s, player);
+				break;
+			case 13:
+				gravarDados(player);
+				break;
+			case 14:
+				carregarDados(player);
 				break;
 			case 0:
 				System.out.println("Adeus, volte sempre!");
@@ -297,7 +299,62 @@ public class Main {
 		System.out.println("(10) Reordenar playlist");
 		System.out.println("(11) Alocar musica a outra playlist");
 		System.out.println("(12) Tocar musica");
+		System.out.println("(13) Guardar dados");
+		System.out.println("(14) Carregar dados");
 		System.out.println(" (0) Sair");
 		System.out.println("Introduza uma opção:");
+	}
+
+	public static void gravarDados(Player player) {
+		try {
+			String resultado = player.gravarDados();
+			System.out.println(resultado);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		pausa();
+	}
+
+	public static void carregarDados(Player player) {
+		Scanner f = null;
+		try {
+			f = new Scanner(new File("playlist.txt"));
+			player.reset();
+			String playlistActual = "";
+			while (true) {
+				if (f.hasNextLine()) {
+					String[] token = f.nextLine().split(",");
+					/*
+					 * Formato de ficheiro:
+					 * token[0] = numero de playlist
+					 * token[1] = capacidade musicas
+					 * token[2] = nome playlist
+					 * token[3] = musica.getTitulo()
+					 * token[4] = musica.getAutor()
+					 * token[5] = musica.getDuracao()
+					 * token[6] = musica.getAno()
+					 * token[7] = musica.getGenero()
+					 * token[8] = musica.getFicheiro());
+					 */
+					if (!playlistActual.equals(token[0])) {
+						playlistActual = token[0];
+						player.criarPlaylist(token[2], Integer.parseInt(token[1]));
+					}
+					player.criarMusica(Integer.parseInt(token[0]), new Musica(token[3], token[4], Double.parseDouble(token[5]), Integer.parseInt(token[6]), token[7], token[8]));
+				} else {
+					System.out.println("Dados carregados com sucesso.");
+					pausa();
+					break;
+				}
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println(e.getMessage());
+			System.out.println("Tente guardar os dados primeiro.");
+			pausa();
+		} finally {
+			if (f != null) {
+				f.close();
+			}
+		}
 	}
 }
