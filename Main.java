@@ -1,4 +1,3 @@
-
 /**
  * @author Paulo Pocinho
  * @since 21-02-2017
@@ -21,6 +20,8 @@ public class Main {
 		final int playlistsPossiveis = 100;
 
 		Player player = new Player(playlistsPossiveis);
+
+		inicializar(player);
 
 		do {
 			escreveMenu();
@@ -83,7 +84,7 @@ public class Main {
 		s.close();
 	}
 
-	private static void tocarMusica(Scanner s, Player p) {
+	public static void tocarMusica(Scanner s, Player p) {
 		System.out.println("Introduza o numero da playlist:");
 		int playlist = s.nextInt();
 		s.nextLine();
@@ -310,7 +311,8 @@ public class Main {
 			String resultado = player.gravarDados();
 			System.out.println(resultado);
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			System.out.println("Excepção: " + e.getMessage());
+			e.printStackTrace();
 		}
 		pausa();
 	}
@@ -355,6 +357,18 @@ public class Main {
 			if (f != null) {
 				f.close();
 			}
+		}
+	}
+
+	public static void inicializar(Player player) {
+		File f = null;
+		try {
+			f = new File("playlist.txt");
+			if (f.exists()) {
+				carregarDados(player);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
 		}
 	}
 }

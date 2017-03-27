@@ -1,11 +1,11 @@
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
-
 /**
  * @author Paulo Pocinho
  * @since 21-02-2017
  */
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 public class Player {
 
@@ -155,17 +155,23 @@ public class Player {
 	}
 
 	public String gravarDados() throws FileNotFoundException {
-		String resultado = "";
+		String resultado = "Alguma coisa correu mal.";
 
 		PrintWriter f = null;
 		try {
 			f = new PrintWriter("playlist.txt");
 			for (int i = 0; i < totalPlaylists; ++i) {
-				Musica lista[] = playlists[i].getLista();
-				int capacidadeMusicas = lista.length;
-				for (int m = 0; m < capacidadeMusicas; ++m) {
-					f.println((i + 1) + "," + capacidadeMusicas + "," + playlists[i].getNome() + "," + lista[m].getTitulo() + "," + lista[m].getAutor() + "," + lista[m].getDuracao() + "," + lista[m].getAno() + "," + lista[m].getGenero()
-							+ "," + lista[m].getFicheiro());
+				Musica[] lista = playlists[i].getLista();
+				int total = playlists[i].getTotalMusicas();
+				int capacidade = lista.length;
+				for (int m = 0; m < total; ++m) {
+					f.println((i + 1) + "," + capacidade + "," + playlists[i].getNome() + "," +
+									lista[m].getTitulo() + "," +
+									lista[m].getAutor() + "," +
+									lista[m].getDuracao() + "," +
+									lista[m].getAno() + "," +
+									lista[m].getGenero() + "," +
+									lista[m].getFicheiro());
 				}
 			}
 			resultado = "Dados gravados com sucesso.";
