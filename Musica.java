@@ -9,7 +9,7 @@ public class Musica {
 	private String autor;
 	private double duracao;
 	private int ano;
-	private String genero;
+	private Estilo estilo;
 	private String ficheiro;
 
 	public String getTitulo() {
@@ -44,12 +44,12 @@ public class Musica {
 		this.ano = ano;
 	}
 
-	public String getGenero() {
-		return genero;
+	public Estilo getEstilo() {
+		return estilo;
 	}
 
-	public void setGenero(String genero) {
-		this.genero = genero;
+	public void setEstilo(Estilo estilo) {
+		this.estilo = estilo;
 	}
 
 	public String getFicheiro() {
@@ -60,17 +60,26 @@ public class Musica {
 		this.ficheiro = ficheiro;
 	}
 
+    private static String capitalizar(final String frase) {
+        return Character.toUpperCase(frase.charAt(0)) + frase.substring(1).toLowerCase();
+    }
+
 	@Override
 	public String toString() {
-		return "Titulo: " + titulo + "\nAutor: " + autor + "\nDuração: " + duracao + "\nAno: " + ano + "\nGenero: " + genero + "\nFicheiro: " + ficheiro;
+		return "Titulo: " + titulo +
+                "\nAutor: " + autor +
+                "\nDuração: " + duracao +
+                "\nAno: " + ano +
+                "\nEstilo: " + capitalizar(estilo.name()) +
+                "\nFicheiro: " + ficheiro;
 	}
 
-	public Musica(String titulo, String autor, double duracao, int ano, String genero, String ficheiro) {
+	public Musica(String titulo, String autor, double duracao, int ano, Estilo estilo, String ficheiro) {
 		this.titulo = titulo;
 		this.autor = autor;
 		this.duracao = duracao;
 		this.ano = ano;
-		this.genero = genero;
+		this.estilo = estilo;
 		this.ficheiro = ficheiro;
 	}
 }

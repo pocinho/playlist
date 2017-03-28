@@ -84,6 +84,21 @@ public class Main {
 		s.close();
 	}
 
+	private static String capitalizar(final String frase) {
+	    return Character.toUpperCase(frase.charAt(0)) + frase.substring(1).toLowerCase();
+    }
+
+    private static Estilo parseEstilo(final String frase) {
+	    Estilo estilo = Estilo.OUTRO;
+	    for (Estilo e : Estilo.values()) {
+	        if (frase.equalsIgnoreCase(e.name())) {
+                estilo = e;
+                break;
+            }
+        }
+        return estilo;
+    }
+
 	public static void tocarMusica(Scanner s, Player p) {
 		System.out.println("Introduza o numero da playlist:");
 		int playlist = s.nextInt();
@@ -105,27 +120,38 @@ public class Main {
 	}
 
 	public static void criarMusica(Scanner s, Player p) {
-		System.out.println("Introduza o numero da playlist:");
-		int playlist = s.nextInt();
-		s.nextLine();
-		System.out.println("Introduza o titulo da musica:");
-		String titulo = s.nextLine();
-		System.out.println("Introduza o autor da musica " + titulo + ":");
-		String autor = s.nextLine();
-		System.out.println("Introduza a duração da musica " + titulo + ":");
-		double duracao = s.nextDouble();
-		s.nextLine();
-		System.out.println("Introduza o ano da musica " + titulo + ":");
-		int ano = s.nextInt();
-		s.nextLine();
-		System.out.println("Introduza o genero da musica " + titulo + ":");
-		String genero = s.nextLine();
-		System.out.println("Introduza o caminho para o ficheiro da musica " + titulo + ":");
-		String ficheiro = s.nextLine();
-		try {
-			p.criarMusica(playlist, new Musica(titulo, autor, duracao, ano, genero, ficheiro));
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+		if (p.getTotalPlaylists() > 0) {
+			System.out.println(p);
+			System.out.println("Introduza o numero da playlist:");
+			int playlist = s.nextInt();
+			s.nextLine();
+			System.out.println("Introduza o titulo da musica:");
+			String titulo = s.nextLine();
+			System.out.println("Introduza o autor da musica " + titulo + ":");
+			String autor = s.nextLine();
+			System.out.println("Introduza a duração da musica " + titulo + ":");
+			double duracao = s.nextDouble();
+			s.nextLine();
+			System.out.println("Introduza o ano da musica " + titulo + ":");
+			int ano = s.nextInt();
+			s.nextLine();
+			System.out.println("Introduza o estilo da musica " + titulo + ":");
+			System.out.print("Estilos disponíveis: ");
+			for (Estilo e : Estilo.values()) {
+			    System.out.print(capitalizar(e.name()) + " ");
+            }
+            System.out.println();
+			String estiloFrase = s.nextLine();
+            Estilo estilo = parseEstilo(estiloFrase);
+			System.out.println("Introduza o caminho para o ficheiro da musica " + titulo + ":");
+			String ficheiro = s.nextLine();
+			try {
+				p.criarMusica(playlist, new Musica(titulo, autor, duracao, ano, estilo, ficheiro));
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		} else {
+			System.out.println("Ainda não tem playlists criadas.");
 		}
 		pausa();
 	}
@@ -162,11 +188,16 @@ public class Main {
 		int ano = s.nextInt();
 		s.nextLine();
 		System.out.println("Introduza o estilo da musica " + titulo + ":");
-		String genero = s.nextLine();
+        for (Estilo e : Estilo.values()) {
+            System.out.print(capitalizar(e.name()) + " ");
+        }
+        System.out.println();
+        String estiloFrase = s.nextLine();
+        Estilo estilo = parseEstilo(estiloFrase);
 		System.out.println("Introduza o caminho para o ficheiro da musica " + titulo + ":");
 		String ficheiro = s.nextLine();
 		try {
-			p.alterarMusica(playlist, musica, new Musica(titulo, autor, duracao, ano, genero, ficheiro));
+			p.alterarMusica(playlist, musica, new Musica(titulo, autor, duracao, ano, estilo, ficheiro));
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -325,7 +356,7 @@ public class Main {
 			String playlistActual = "";
 			while (true) {
 				if (f.hasNextLine()) {
-					String[] token = f.nextLine().split(",");
+					String[] token = f.nextLine().split(";");
 					/*
 					 * Formato de ficheiro:
 					 * token[0] = numero de playlist
@@ -335,14 +366,14 @@ public class Main {
 					 * token[4] = musica.getAutor()
 					 * token[5] = musica.getDuracao()
 					 * token[6] = musica.getAno()
-					 * token[7] = musica.getGenero()
+					 * token[7] = musica.getEstilo()
 					 * token[8] = musica.getFicheiro());
 					 */
 					if (!playlistActual.equals(token[0])) {
 						playlistActual = token[0];
 						player.criarPlaylist(token[2], Integer.parseInt(token[1]));
 					}
-					player.criarMusica(Integer.parseInt(token[0]), new Musica(token[3], token[4], Double.parseDouble(token[5]), Integer.parseInt(token[6]), token[7], token[8]));
+					player.criarMusica(Integer.parseInt(token[0]), new Musica(token[3], token[4], Double.parseDouble(token[5]), Integer.parseInt(token[6]), parseEstilo(token[7]), token[8]));
 				} else {
 					System.out.println("Dados carregados com sucesso.");
 					pausa();

@@ -156,7 +156,7 @@ public class Player {
 
 	public String gravarDados() throws FileNotFoundException {
 		String resultado = "Alguma coisa correu mal.";
-
+		String delimitador = ";";
 		PrintWriter f = null;
 		try {
 			f = new PrintWriter("playlist.txt");
@@ -165,12 +165,13 @@ public class Player {
 				int total = playlists[i].getTotalMusicas();
 				int capacidade = lista.length;
 				for (int m = 0; m < total; ++m) {
-					f.println((i + 1) + "," + capacidade + "," + playlists[i].getNome() + "," +
-									lista[m].getTitulo() + "," +
-									lista[m].getAutor() + "," +
-									lista[m].getDuracao() + "," +
-									lista[m].getAno() + "," +
-									lista[m].getGenero() + "," +
+					f.println((i + 1) + delimitador + capacidade + delimitador +
+									playlists[i].getNome() + delimitador +
+									lista[m].getTitulo() + delimitador +
+									lista[m].getAutor() + delimitador +
+									lista[m].getDuracao() + delimitador +
+									lista[m].getAno() + delimitador +
+									lista[m].getEstilo() + delimitador +
 									lista[m].getFicheiro());
 				}
 			}

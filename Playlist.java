@@ -1,11 +1,11 @@
-import java.awt.Desktop;
-import java.io.File;
-import java.io.IOException;
-
 /**
  * @author Paulo Pocinho
  * @since 21-02-2017
  */
+
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
 
 public class Playlist {
 
@@ -31,8 +31,13 @@ public class Playlist {
 		if ((pos < 0) || (pos >= totalMusicas)) {
 			throw new IllegalArgumentException("Não é possivel encontrar a musica " + posicao + " na playlist " + nome + ".");
 		} else {
-			String ficheiro = listaMusica[pos].getFicheiro();
-			Desktop.getDesktop().open(new File(ficheiro));
+			String caminho = listaMusica[pos].getFicheiro();
+			File f = new File(caminho);
+			if (f.exists()) {
+                Desktop.getDesktop().open(f);
+            } else {
+                throw new IllegalArgumentException("Não é possivel abrir o ficheiro: " + caminho);
+            }
 		}
 	}
 
