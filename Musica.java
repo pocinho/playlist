@@ -60,17 +60,13 @@ public class Musica {
 		this.ficheiro = ficheiro;
 	}
 
-    private static String capitalizar(final String frase) {
-        return Character.toUpperCase(frase.charAt(0)) + frase.substring(1).toLowerCase();
-    }
-
 	@Override
 	public String toString() {
 		return "Titulo: " + titulo +
                 "\nAutor: " + autor +
                 "\nDuração: " + duracao +
                 "\nAno: " + ano +
-                "\nEstilo: " + capitalizar(estilo.name()) +
+                "\nEstilo: " + Estilo.capitalizarEstilo(estilo) +
                 "\nFicheiro: " + ficheiro;
 	}
 

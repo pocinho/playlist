@@ -84,21 +84,6 @@ public class Main {
 		s.close();
 	}
 
-	private static String capitalizar(final String frase) {
-	    return Character.toUpperCase(frase.charAt(0)) + frase.substring(1).toLowerCase();
-    }
-
-    private static Estilo parseEstilo(final String frase) {
-	    Estilo estilo = Estilo.OUTRO;
-	    for (Estilo e : Estilo.values()) {
-	        if (frase.equalsIgnoreCase(e.name())) {
-                estilo = e;
-                break;
-            }
-        }
-        return estilo;
-    }
-
 	public static void tocarMusica(Scanner s, Player p) {
 		System.out.println("Introduza o numero da playlist:");
 		int playlist = s.nextInt();
@@ -138,11 +123,11 @@ public class Main {
 			System.out.println("Introduza o estilo da musica " + titulo + ":");
 			System.out.print("Estilos disponíveis: ");
 			for (Estilo e : Estilo.values()) {
-			    System.out.print(capitalizar(e.name()) + " ");
+			    System.out.print(Estilo.capitalizarEstilo(e) + " ");
             }
             System.out.println();
 			String estiloFrase = s.nextLine();
-            Estilo estilo = parseEstilo(estiloFrase);
+            Estilo estilo = Estilo.parseEstilo(estiloFrase);
 			System.out.println("Introduza o caminho para o ficheiro da musica " + titulo + ":");
 			String ficheiro = s.nextLine();
 			try {
@@ -189,11 +174,11 @@ public class Main {
 		s.nextLine();
 		System.out.println("Introduza o estilo da musica " + titulo + ":");
         for (Estilo e : Estilo.values()) {
-            System.out.print(capitalizar(e.name()) + " ");
+            System.out.print(Estilo.capitalizarEstilo(e) + " ");
         }
         System.out.println();
         String estiloFrase = s.nextLine();
-        Estilo estilo = parseEstilo(estiloFrase);
+        Estilo estilo = Estilo.parseEstilo(estiloFrase);
 		System.out.println("Introduza o caminho para o ficheiro da musica " + titulo + ":");
 		String ficheiro = s.nextLine();
 		try {
@@ -351,12 +336,15 @@ public class Main {
 	public static void carregarDados(Player player) {
 		Scanner f = null;
 		try {
-			f = new Scanner(new File("playlist.txt"));
-			player.reset();
-			String playlistActual = "";
-			while (true) {
-				if (f.hasNextLine()) {
-					String[] token = f.nextLine().split(";");
+			File dados = new File("playlist.txt");
+			// Não fazer reset ao player se não existirem dados.
+			if (dados.exists()) {
+				f = new Scanner(dados);
+				player.reset();
+				String playlistActual = "";
+				while (true) {
+					if (f.hasNextLine()) {
+						String[] token = f.nextLine().split(";");
 					/*
 					 * Formato de ficheiro:
 					 * token[0] = numero de playlist
@@ -369,26 +357,27 @@ public class Main {
 					 * token[7] = musica.getEstilo()
 					 * token[8] = musica.getFicheiro());
 					 */
-					if (!playlistActual.equals(token[0])) {
-						playlistActual = token[0];
-						player.criarPlaylist(token[2], Integer.parseInt(token[1]));
+						if (!playlistActual.equals(token[0])) {
+							playlistActual = token[0];
+							player.criarPlaylist(token[2], Integer.parseInt(token[1]));
+						}
+						player.criarMusica(Integer.parseInt(token[0]), new Musica(token[3], token[4], Double.parseDouble(token[5]), Integer.parseInt(token[6]), Estilo.parseEstilo(token[7]), token[8]));
+					} else {
+						System.out.println("Dados carregados com sucesso.");
+						break;
 					}
-					player.criarMusica(Integer.parseInt(token[0]), new Musica(token[3], token[4], Double.parseDouble(token[5]), Integer.parseInt(token[6]), parseEstilo(token[7]), token[8]));
-				} else {
-					System.out.println("Dados carregados com sucesso.");
-					pausa();
-					break;
 				}
+			} else {
+				System.out.println("Ainda não existem dados guardados.");
 			}
 		} catch (FileNotFoundException e) {
 			System.out.println(e.getMessage());
-			System.out.println("Tente guardar os dados primeiro.");
-			pausa();
 		} finally {
 			if (f != null) {
 				f.close();
 			}
 		}
+		pausa();
 	}
 
 	public static void inicializar(Player player) {
