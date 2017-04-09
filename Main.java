@@ -25,8 +25,7 @@ public class Main {
 
 		do {
 			escreveMenu();
-			opcao = s.nextInt();
-			s.nextLine();
+			opcao = validarInt(s);
 
 			switch (opcao) {
 			case 1:
@@ -86,11 +85,9 @@ public class Main {
 
 	public static void tocarMusica(Scanner s, Player p) {
 		System.out.println("Introduza o numero da playlist:");
-		int playlist = s.nextInt();
-		s.nextLine();
+		int playlist = validarInt(s);
 		System.out.println("Introduza o numero da musica:");
-		int musica = s.nextInt();
-		s.nextLine();
+		int musica = validarInt(s);
 		try {
 			p.tocarMusica(playlist, musica);
 		} catch (Exception e) {
@@ -108,18 +105,15 @@ public class Main {
 		if (p.getTotalPlaylists() > 0) {
 			System.out.println(p);
 			System.out.println("Introduza o numero da playlist:");
-			int playlist = s.nextInt();
-			s.nextLine();
+			int playlist = validarInt(s);
 			System.out.println("Introduza o titulo da musica:");
 			String titulo = s.nextLine();
 			System.out.println("Introduza o autor da musica " + titulo + ":");
 			String autor = s.nextLine();
 			System.out.println("Introduza a duração da musica " + titulo + ":");
-			double duracao = s.nextDouble();
-			s.nextLine();
+			double duracao = validarDouble(s);
 			System.out.println("Introduza o ano da musica " + titulo + ":");
-			int ano = s.nextInt();
-			s.nextLine();
+			int ano = validarInt(s);
 			System.out.println("Introduza o estilo da musica " + titulo + ":");
 			System.out.print("Estilos disponíveis: ");
 			for (Estilo e : Estilo.values()) {
@@ -145,8 +139,7 @@ public class Main {
 		System.out.println("Introduza o nome da playlist:");
 		String nome = s.nextLine();
 		System.out.println("Introduza a capacidade da playlist " + nome + ":");
-		int capacidade = s.nextInt();
-		s.nextLine();
+		int capacidade = validarInt(s);
 		try {
 			p.criarPlaylist(nome, capacidade);
 		} catch (Exception e) {
@@ -157,21 +150,17 @@ public class Main {
 
 	public static void alterarMusica(Scanner s, Player p) {
 		System.out.println("Introduza o numero da playlist:");
-		int playlist = s.nextInt();
-		s.nextLine();
+		int playlist = validarInt(s);
 		System.out.println("Introduza o numero da musica a alterar:");
-		int musica = s.nextInt();
-		s.nextLine();
+		int musica = validarInt(s);
 		System.out.println("Introduza o titulo da musica:");
 		String titulo = s.nextLine();
 		System.out.println("Introduza o autor da musica " + titulo + ":");
 		String autor = s.nextLine();
 		System.out.println("Introduza a duração da musica " + titulo + ":");
-		double duracao = s.nextDouble();
-		s.nextLine();
+		double duracao = validarDouble(s);
 		System.out.println("Introduza o ano da musica " + titulo + ":");
-		int ano = s.nextInt();
-		s.nextLine();
+		int ano = validarInt(s);
 		System.out.println("Introduza o estilo da musica " + titulo + ":");
         for (Estilo e : Estilo.values()) {
             System.out.print(Estilo.capitalizarEstilo(e) + " ");
@@ -191,8 +180,7 @@ public class Main {
 
 	public static void alterarPlaylist(Scanner s, Player p) {
 		System.out.println("Introduza o numero da playlist:");
-		int playlist = s.nextInt();
-		s.nextLine();
+		int playlist = validarInt(s);
 		System.out.println("Introduza o nome da playlist:");
 		String nome = s.nextLine();
 		try {
@@ -205,11 +193,9 @@ public class Main {
 
 	public static void consultarMusica(Scanner s, Player p) {
 		System.out.println("Introduza o numero da playlist:");
-		int playlist = s.nextInt();
-		s.nextLine();
+		int playlist = validarInt(s);
 		System.out.println("Introduza o numero da musica:");
-		int musica = s.nextInt();
-		s.nextLine();
+		int musica = validarInt(s);
 		try {
 			System.out.println(p.consultarMusica(playlist, musica));
 		} catch (Exception e) {
@@ -220,8 +206,7 @@ public class Main {
 
 	public static void consultarPlaylist(Scanner s, Player p) {
 		System.out.println("Introduza o numero da playlist:");
-		int playlist = s.nextInt();
-		s.nextLine();
+		int playlist = validarInt(s);
 		try {
 			System.out.println(p.consultarPlaylist(playlist));
 		} catch (Exception e) {
@@ -232,14 +217,11 @@ public class Main {
 
 	public static void alocarMusica(Scanner s, Player p) {
 		System.out.println("Introduza o numero da playlist origem:");
-		int origem = s.nextInt();
-		s.nextLine();
+		int origem = validarInt(s);
 		System.out.println("Introduza o numero da musica na playlist " + origem + ":");
-		int musica = s.nextInt();
-		s.nextLine();
+		int musica = validarInt(s);
 		System.out.println("Introduza o numero da playlist destino:");
-		int destino = s.nextInt();
-		s.nextLine();
+		int destino = validarInt(s);
 		try {
 			p.alocarMusica(origem, musica, destino);
 		} catch (Exception e) {
@@ -250,11 +232,9 @@ public class Main {
 
 	public static void removerMusica(Scanner s, Player p) {
 		System.out.println("Introduza o numero da playlist:");
-		int playlist = s.nextInt();
-		s.nextLine();
+		int playlist = validarInt(s);
 		System.out.println("Introduza o numero da musica:");
-		int musica = s.nextInt();
-		s.nextLine();
+		int musica = validarInt(s);
 		try {
 			p.removerMusica(playlist, musica);
 		} catch (Exception e) {
@@ -265,8 +245,7 @@ public class Main {
 
 	public static void removerPlaylist(Scanner s, Player p) {
 		System.out.println("Introduza o numero da playlist:");
-		int playlist = s.nextInt();
-		s.nextLine();
+		int playlist = validarInt(s);
 		try {
 			p.removerPlaylist(playlist);
 		} catch (Exception e) {
@@ -277,14 +256,11 @@ public class Main {
 
 	public static void reordenarPlaylist(Scanner s, Player p) {
 		System.out.println("Introduza o numero da playlist:");
-		int playlist = s.nextInt();
-		s.nextLine();
+		int playlist = validarInt(s);
 		System.out.println("Introduza o numero da musica origem na playlist " + playlist + ":");
-		int origem = s.nextInt();
-		s.nextLine();
+		int origem = validarInt(s);
 		System.out.println("Introduza o numero da musica destino na playlist " + playlist + ":");
-		int destino = s.nextInt();
-		s.nextLine();
+		int destino = validarInt(s);
 		try {
 			p.reordenarPlaylist(playlist, origem, destino);
 		} catch (Exception e) {
@@ -390,5 +366,33 @@ public class Main {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
+	}
+
+	static double validarDouble(Scanner s) {
+		double resultado = 0.0;
+		for(;;) {
+			if (!s.hasNextDouble()) {
+				System.out.println("Numero invalido.");
+				s.nextLine();
+			} else {
+				resultado = Double.parseDouble(s.nextLine());
+				break;
+			}
+		}
+		return resultado;
+	}
+
+	static int validarInt(Scanner s) {
+		int resultado = 0;
+		for (;;) {
+			if (!s.hasNextInt()) {
+				System.out.println("Numero invalido.");
+				s.nextLine();
+			} else {
+				resultado = Integer.parseInt(s.nextLine());
+				break;
+			}
+		}
+		return resultado;
 	}
 }

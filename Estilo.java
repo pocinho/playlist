@@ -2,6 +2,7 @@
  * @author Paulo Pocinho
  * @since 28-03-2017
  */
+
 public enum Estilo {
     AFRICANO, ASIATICO, BLUES, CARAIBAS, COUNTRY, ELECTRONICO, EXPERIMENTAL,
     FOLK, HIPHOP, JAZZ, LATINO, POP, RANDB, SOUL, ROCK, OUTRO;
