@@ -6,6 +6,7 @@
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 
 public class Playlist {
 
@@ -51,7 +52,7 @@ public class Playlist {
 	}
 
 	public Musica[] getLista() {
-		return this.listaMusica;
+		return Arrays.copyOf(listaMusica, listaMusica.length);
 	}
 
 	public int getTotalMusicas() {

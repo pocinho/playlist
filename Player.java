@@ -6,6 +6,7 @@
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 
 public class Player {
 
@@ -161,7 +162,7 @@ public class Player {
 		try {
 			f = new PrintWriter("playlist.txt");
 			for (int i = 0; i < totalPlaylists; ++i) {
-				Musica[] lista = playlists[i].getLista();
+				Musica[] lista = Arrays.copyOf(playlists[i].getLista(), playlists[i].getLista().length);
 				int total = playlists[i].getTotalMusicas();
 				int capacidade = lista.length;
 				for (int m = 0; m < total; ++m) {
