@@ -156,8 +156,8 @@ public class Player {
 	}
 
 	public String gravarDados() throws FileNotFoundException {
-		String resultado = "Alguma coisa correu mal.";
-		String delimitador = ";";
+		StringBuilder resultado = new StringBuilder("Alguma coisa correu mal.");
+		char delimitador = ';';
 		PrintWriter f = null;
 		try {
 			f = new PrintWriter("playlist.txt");
@@ -176,13 +176,13 @@ public class Player {
 									lista[m].getFicheiro());
 				}
 			}
-			resultado = "Dados gravados com sucesso.";
+			resultado.replace(0, resultado.length(), "Dados gravados com sucesso.");
 		} finally {
 			if (f != null) {
 				f.close();
 			}
 		}
-		return resultado;
+		return resultado.toString();
 	}
 
 	public void reset() {
@@ -194,15 +194,22 @@ public class Player {
 
 	@Override
 	public String toString() {
-		String resultado = "Playlists disponíveis:\n\n";
+		StringBuilder resultado = new StringBuilder("Playlists disponíveis:\n\n");
 
 		for (int i = 0; i < totalPlaylists; ++i) {
-			resultado += (i + 1) + ". " + playlists[i].getNome() + "\n";
+			resultado.append(i + 1);
+			resultado.append(". ");
+			resultado.append(playlists[i].getNome());
+			resultado.append("\n");
 		}
 
-		resultado += "\nTotal Playlists: " + totalPlaylists + "\nCapacidade: " + capacidade + "\n";
+		resultado.append("\nTotal Playlists: ");
+		resultado.append(totalPlaylists);
+		resultado.append("\nCapacidade: ");
+		resultado.append(capacidade);
+		resultado.append("\n");
 
-		return resultado;
+		return resultado.toString();
 	}
 
 	public Player(int capacidade) {

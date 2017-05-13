@@ -62,12 +62,19 @@ public class Musica {
 
 	@Override
 	public String toString() {
-		return "Titulo: " + titulo +
-                "\nAutor: " + autor +
-                "\nDuração: " + duracao +
-                "\nAno: " + ano +
-                "\nEstilo: " + Estilo.capitalizarEstilo(estilo) +
-                "\nFicheiro: " + ficheiro;
+		StringBuilder resultado = new StringBuilder("Titulo: ");
+		resultado.append(titulo);
+		resultado.append("\nAutor: ");
+		resultado.append(autor);
+		resultado.append("\nDuração: ");
+		resultado.append(duracao);
+		resultado.append("\nAno: ");
+		resultado.append(ano);
+		resultado.append("\nEstilo: ");
+		resultado.append(Estilo.capitalizarEstilo(estilo));
+		resultado.append("\nFicheiro: ");
+		resultado.append(ficheiro);
+		return resultado.toString();
 	}
 
 	public Musica(String titulo, String autor, double duracao, int ano, Estilo estilo, String ficheiro) {

@@ -102,15 +102,21 @@ public class Playlist {
 
 	public String consultarMusica(int posicao) throws IllegalArgumentException {
 		int pos = posicao - 1;
-		String consulta = "";
+		StringBuilder consulta = new StringBuilder(0);
 		if ((pos < 0) || (pos >= totalMusicas)) {
 			throw new IllegalArgumentException("Não é possivel encontrar a musica " + posicao + " na playlist " + nome + ".");
 		} else {
-			consulta = "Playlist " + nome + ":\n\n";
-			consulta += posicao + ". " + listaMusica[pos].getTitulo() + "\n\n";
-			consulta += listaMusica[pos] + "\n";
+			consulta.append("Playlist ");
+			consulta.append(nome);
+			consulta.append(":\n\n");
+			consulta.append(posicao);
+			consulta.append(". ");
+			consulta.append(listaMusica[pos].getTitulo());
+			consulta.append("\n\n");
+			consulta.append(listaMusica[pos]);
+			consulta.append("\n");
 		}
-		return consulta;
+		return consulta.toString();
 	}
 
 	public void alterarMusica(int posicao, Musica musica) throws IllegalArgumentException {
@@ -138,15 +144,24 @@ public class Playlist {
 
 	@Override
 	public String toString() {
-		String resultado = "Playlist " + nome + ":\n\n";
+		StringBuilder resultado = new StringBuilder("Playlist ");
+		resultado.append(nome);
+		resultado.append(":\n\n");
 
 		for (int i = 0; i < totalMusicas; ++i) {
-			resultado += (i + 1) + ". " + listaMusica[i].getTitulo() + "\n";
+			resultado.append(i + 1);
+			resultado.append(". ");
+			resultado.append(listaMusica[i].getTitulo());
+			resultado.append("\n");
 		}
 
-		resultado += "\nTotal Musicas: " + totalMusicas + "\nCapacidade: " + capacidade + "\n";
+		resultado.append("\nTotal Musicas: ");
+		resultado.append(totalMusicas);
+		resultado.append("\nCapacidade: ");
+		resultado.append(capacidade);
+		resultado.append("\n");
 
-		return resultado;
+		return resultado.toString();
 	}
 
 	public Playlist(String nome, int capacidade) {

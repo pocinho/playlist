@@ -8,7 +8,7 @@ public enum Estilo {
     FOLK, HIPHOP, JAZZ, LATINO, POP, RANDB, SOUL, ROCK, OUTRO;
 
     public static Estilo parseEstilo(final String frase) {
-        Estilo estilo = Estilo.OUTRO;
+        Estilo estilo = null;
         for (Estilo e : Estilo.values()) {
             if (frase.equalsIgnoreCase(e.name())) {
                 estilo = e;

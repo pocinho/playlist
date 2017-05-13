@@ -114,14 +114,17 @@ public class Main {
 			double duracao = validarDouble(s);
 			System.out.println("Introduza o ano da musica " + titulo + ":");
 			int ano = validarInt(s);
-			System.out.println("Introduza o estilo da musica " + titulo + ":");
-			System.out.print("Estilos disponíveis: ");
-			for (Estilo e : Estilo.values()) {
-			    System.out.print(Estilo.capitalizarEstilo(e) + " ");
-            }
-            System.out.println();
-			String estiloFrase = s.nextLine();
-            Estilo estilo = Estilo.parseEstilo(estiloFrase);
+			Estilo estilo = null;
+			do {
+				System.out.println("Introduza o estilo da musica " + titulo + ":");
+				System.out.print("Estilos disponíveis: ");
+				for (Estilo e : Estilo.values()) {
+					System.out.print(Estilo.capitalizarEstilo(e) + " ");
+				}
+				System.out.println();
+				String estiloFrase = s.nextLine();
+				estilo = Estilo.parseEstilo(estiloFrase);
+			} while (estilo == null);
 			System.out.println("Introduza o caminho para o ficheiro da musica " + titulo + ":");
 			String ficheiro = s.nextLine();
 			try {
