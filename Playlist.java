@@ -51,8 +51,28 @@ public class Playlist {
 		return resultado;
 	}
 
-	public Musica[] getLista() {
-		return Arrays.copyOf(listaMusica, listaMusica.length);
+	//public Musica[] getLista() {
+	//	return Arrays.copyOf(listaMusica, listaMusica.length);
+	//}
+
+	public String[] serializarMusicas(String delimitador) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < totalMusicas; ++i) {
+			sb.append(listaMusica[i].getTitulo());
+			sb.append(delimitador);
+			sb.append(listaMusica[i].getAutor());
+			sb.append(delimitador);
+			sb.append(listaMusica[i].getDuracao());
+			sb.append(delimitador);
+			sb.append(listaMusica[i].getAno());
+			sb.append(delimitador);
+			sb.append(listaMusica[i].getEstilo());
+			sb.append(delimitador);
+			sb.append(listaMusica[i].getFicheiro());
+			sb.append("\n");
+		}
+		String[] resultado = sb.toString().split("\n");
+		return resultado;
 	}
 
 	public int getTotalMusicas() {

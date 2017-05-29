@@ -157,23 +157,17 @@ public class Player {
 
 	public String gravarDados() throws FileNotFoundException {
 		StringBuilder resultado = new StringBuilder("Alguma coisa correu mal.");
-		char delimitador = ';';
+		String delimitador = ";";
 		PrintWriter f = null;
 		try {
 			f = new PrintWriter("playlist.txt");
 			for (int i = 0; i < totalPlaylists; ++i) {
-				Musica[] lista = Arrays.copyOf(playlists[i].getLista(), playlists[i].getLista().length);
+				String[] lista = playlists[i].serializarMusicas(delimitador);
 				int total = playlists[i].getTotalMusicas();
-				int capacidade = lista.length;
 				for (int m = 0; m < total; ++m) {
-					f.println((i + 1) + delimitador + capacidade + delimitador +
+					f.println((i + 1) + delimitador + total + delimitador +
 									playlists[i].getNome() + delimitador +
-									lista[m].getTitulo() + delimitador +
-									lista[m].getAutor() + delimitador +
-									lista[m].getDuracao() + delimitador +
-									lista[m].getAno() + delimitador +
-									lista[m].getEstilo() + delimitador +
-									lista[m].getFicheiro());
+									lista[m]);
 				}
 			}
 			resultado.replace(0, resultado.length(), "Dados gravados com sucesso.");

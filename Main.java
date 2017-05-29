@@ -313,12 +313,10 @@ public class Main {
 	}
 
 	public static void carregarDados(Player player) {
-		Scanner f = null;
-		try {
-			File dados = new File("playlist.txt");
-			// Não fazer reset ao player se não existirem dados.
-			if (dados.exists()) {
-				f = new Scanner(dados);
+		File dados = new File("playlist.txt");
+		// Não fazer reset ao player se não existirem dados.
+		if (dados.exists()) {
+			try (Scanner f = new Scanner(dados)) {
 				player.reset();
 				String playlistActual = "";
 				while (true) {
@@ -346,15 +344,11 @@ public class Main {
 						break;
 					}
 				}
-			} else {
+			} catch (FileNotFoundException e) {
+				System.out.println(e.getMessage());
+			}
+		} else {
 				System.out.println("Ainda não existem dados guardados.");
-			}
-		} catch (FileNotFoundException e) {
-			System.out.println(e.getMessage());
-		} finally {
-			if (f != null) {
-				f.close();
-			}
 		}
 		pausa();
 	}
